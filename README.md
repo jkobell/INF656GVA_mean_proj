@@ -1,0 +1,2 @@
+# INF656GVA_mean_proj
+MEAN STACK PROJECT
