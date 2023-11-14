@@ -1,0 +1,19 @@
+{
+  "name": "food_menu_order_mean",
+  "version": "1.0.0",
+  "description": "MEAN stack application for online food menu ordering.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jkobell/INF656GVA_mean_proj.git"
+  },
+  "author": "James Kobell",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/jkobell/INF656GVA_mean_proj/issues"
+  },
+  "homepage": "https://github.com/jkobell/INF656GVA_mean_proj#readme"
+}
