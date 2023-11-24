@@ -1,6 +1,7 @@
 import * as mongodb from "mongodb";
 import { Listing } from "./listing/listing";
 import { ListingImage } from "./image/listing_image";
+import { User } from "./admin/user/user";
 
 export const listing_collections: {
     listings?: mongodb.Collection<Listing>;
@@ -8,6 +9,10 @@ export const listing_collections: {
 
 export const image_collections: {
     listings_images?: mongodb.Collection<ListingImage>;
+} = {};
+
+export const user_collections: {
+    users?: mongodb.Collection<User>;
 } = {};
 
 export async function db_connect(uri: string) {
@@ -22,6 +27,10 @@ export async function db_connect(uri: string) {
     await schema_validate_image(db);
     const images_collection = db.collection<ListingImage>("listings_images");
     image_collections.listings_images = images_collection;
+
+    await schema_validate_user(db);
+    const users_collection = db.collection<User>("users");
+    user_collections.users = users_collection;
 }
 
 async function schema_validate_listing(db: mongodb.Db) {
@@ -94,11 +103,48 @@ async function schema_validate_image(db: mongodb.Db) {
         }
     }
     await db.command({
-        collMod: "images",
+        collMod: "listings_images",
         validator: imageJsonSchema
     }).catch(async (error: mongodb.MongoServerError) => {
         if (error.codeName === 'NamespaceNotFound') {
             await db.createCollection("images", {validator: imageJsonSchema});
+        }
+    });
+}
+
+async function schema_validate_user(db: mongodb.Db) {
+    const userJsonSchema = {
+        $jsonSchema: {
+            bsonType: "object",
+            required: ["name", "email", "password", "role"],
+            additionalProperties: false,
+            properties: {
+                _id: {},
+                name: {
+                    bsonType: "string",
+                    description: "name of user is required and is a string",
+                },
+                email: {
+                    bsonType: "string",
+                    description: "email of user is required and is a string",
+                },
+                password: {
+                    bsonType: "string",
+                    description: "password of user is required and is a hash string",
+                },
+                role: {
+                    bsonType: "string",
+                    description: "role of user is required and is a string",
+                },                                    
+            } 
+        }
+    }
+    await db.command({
+        collMod: "users",
+        validator: userJsonSchema
+    }).catch(async (error: mongodb.MongoServerError) => {
+        if (error.codeName === 'NamespaceNotFound') {
+            await db.createCollection("users", {validator: userJsonSchema});
         }
     });
 }

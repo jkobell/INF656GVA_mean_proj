@@ -4,6 +4,8 @@ import express from "express";
 import { db_connect } from "./database";
 import { listingRouter } from "./listing/listing.routes";
 import { admin_listingRouter } from "./admin/admin_listing/admin_listing.routes";
+import { admin_userRouter } from "./admin/user/admin_user.routes";
+import { checkUserExists } from "./admin/middleware/can_register";
 
 dotenv.config();
 
@@ -19,7 +21,9 @@ db_connect(ATLAS_URI)
         const app = express();
         app.use(cors());
         app.use("/listings", listingRouter);
-        app.use("/admin/listings", admin_listingRouter);
+        app.use("/admin/listing", admin_listingRouter);
+        app.use("/admin/user", admin_userRouter);
+        app.use(checkUserExists);
 
         app.listen(4242, () => {
             console.log('Express server is listening at http://localhost:4242...');

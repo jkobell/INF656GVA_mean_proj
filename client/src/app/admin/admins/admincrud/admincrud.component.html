@@ -1,0 +1,8 @@
+<div class="top_placeholder"></div>
+<app-register></app-register>
+<h1>admincrud works!</h1>
+<div>
+    <button (click)="logout()" *ngIf="this.adminService.isLoggedIn" type="button" class="btn btn-primary">Logout</button>
+</div>
+<!-- <app-listing-form (formSubmitted)="addListing($event)"></app-listing-form> -->
+

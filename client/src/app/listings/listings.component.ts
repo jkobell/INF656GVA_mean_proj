@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Listing } from './listing';
+import { Observable } from 'rxjs';
+import { ListingService } from '../listing.service'; 
+
 import { LISTINGS } from './mock_listings';
 import { LISTINGS_IMAGES } from './mock_listings_images';
 //import { setContentContainerSize } from 'set_content_container_size';
@@ -12,19 +15,34 @@ import { LISTINGS_IMAGES } from './mock_listings_images';
   })
 
   /* export class ListingsComponent implements OnInit { */
-  export class ListingsComponent {
+  export class ListingsComponent implements OnInit {
     
-    listings = LISTINGS;
     selectedListing?: Listing;
-    
-    listings_images = LISTINGS_IMAGES;
-    //image = this.listings_images[0].image_b64;
-    
-    /* ngOnInit(): void {
-      setContentContainerSize();
-    } */
-   
-    onSelect(listing: Listing): void {
-        this.selectedListing = listing;    
-    }
+    /* listings = LISTINGS;
+    selectedListing?: Listing;    
+    listings_images = LISTINGS_IMAGES; */
+    listings$: Observable<Listing[]> = new Observable();
+ 
+  constructor(private listingService: ListingService) { }
+  
+  ngOnInit(): void {
+    this.fetchEmployees();
   }
+  
+  deleteEmployee(id: string): void {
+    this.listingService.deleteListing(id).subscribe({
+      next: () => this.fetchEmployees()
+    });
+  }
+  
+  private fetchEmployees(): void {
+    this.listings$ = this.listingService.getListings();
+  }
+
+  onSelect(listing: Listing): void {
+    this.selectedListing = listing;    
+  }
+}
+   
+    
+

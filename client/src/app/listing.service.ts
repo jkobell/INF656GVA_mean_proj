@@ -7,7 +7,7 @@ import { Listing } from './listings/listing';
   providedIn: 'root'
 })
 export class ListingService {
-  private url = 'http://localhost:4200';
+  private url = 'http://localhost:4242';
   private listings$: Subject<Listing[]> = new Subject();
 
   constructor(private httpClient: HttpClient) { }
