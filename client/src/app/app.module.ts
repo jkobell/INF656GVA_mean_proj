@@ -12,6 +12,9 @@ import { AdminruComponent } from './admin/admins/adminru/adminru.component';
 import { AdmincrudComponent } from './admin/admins/admincrud/admincrud.component';
 import { ListingFormComponent } from './admin/listing-form/listing-form.component';
 import { AddListingComponent } from './admin/add-listing/add-listing.component';
+import { ImageUploadComponent } from './admin/image-upload/image-upload.component';
+import { UpdateListingComponent } from './admin/update-listing/update-listing.component';
+import { AdminListingsComponent } from './admin/admin-listings/admin-listings.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,10 @@ import { AddListingComponent } from './admin/add-listing/add-listing.component';
     AdminruComponent,
     AdmincrudComponent,
     ListingFormComponent,
-    AddListingComponent
+    AddListingComponent,
+    ImageUploadComponent,
+    UpdateListingComponent,
+    AdminListingsComponent
   ],
   imports: [
     BrowserModule,

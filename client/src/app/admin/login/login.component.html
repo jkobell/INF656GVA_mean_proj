@@ -1,5 +1,8 @@
 <div class="top_placeholder"></div>
 <div>
+    <h2 class="message" *ngIf="this.login_error_message">{{login_error_message}}</h2>
+</div>
+<div>
     <form class="form-login" [formGroup]="loginForm" (ngSubmit)="loginUser()">
         <h3 class="h3 mb-3 font-weight-normal text-center">Login</h3>
         <div class="form-group">
@@ -13,6 +16,4 @@
         <button type="submit" class="btn btn-block btn-primary">Login!</button>
     </form>
 </div>
-<div>
-    <h2>{{login_error_message}}</h2>
-</div>
+

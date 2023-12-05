@@ -1,20 +1,24 @@
 <div class="listing_form_wrapper">
     <form class="listing-form" autocomplete="off" [formGroup]="listingForm" (ngSubmit)="submitForm()">
         <!-- image -->
-        <div class="form-floating mb-3">
-          <input class="form-control" type="text" id="image" formControlName="image" placeholder="Image" required>
+        <div class="form_control_wrapper_div">
+          <!-- <input class="form-control" type="text" id="image" formControlName="image" placeholder="Image" required> -->
+          <!-- <select formControlName="image_selector" id="image"> -->
+          <select class="form_control_select_element" formControlName="image" id="image">
+            <!-- <option *ngFor="let image of images$ | async" [ngValue]="image.image_name"> -->
+              <option *ngFor="let image of images$ | async" [ngValue]="image.image">{{ image.name }} | {{ image.size }}</option>          
+          </select>
           <label for="image">Image</label>
-        </div>
-    
-        <div *ngIf="image.invalid && (image.dirty || image.touched)" class="alert alert-danger">
+        </div>    
+        <!-- <div *ngIf="image.invalid && (image.dirty || image.touched)" class="alert alert-danger">
           <div *ngIf="image.errors?.['required']">
             Image is required.
           </div>
-        </div>
+        </div> -->
     
         <!-- title -->
-        <div class="form-floating mb-3">
-          <input class="form-control" type="text" formControlName="title" placeholder="Title" required>
+        <div class="form_control_wrapper_div">
+          <input class="form_control_input_element" id="title" type="text" formControlName="title" placeholder="Title" required [value]="title.value">
           <label for="title">Title</label>
         </div>
     
@@ -29,9 +33,9 @@
         </div>
     
         <!-- short_description -->
-        <div class="form-floating mb-3">
-            <input class="form-control" type="text" formControlName="short_description" placeholder="Short description" required>
-            <label for="short_description">Short description</label>
+        <div class="form_control_wrapper_div">
+            <input class="form_control_input_element" id="short_description" type="text" formControlName="short_description" placeholder="Short description" required>
+            <label for="short_description">Details</label>
           </div>
       
           <div *ngIf="short_description.invalid && (short_description.dirty || short_description.touched)" class="alert alert-danger">
@@ -47,8 +51,8 @@
     
     
         <!-- price -->
-        <div class="form-floating mb-3">
-            <input class="form-control" type="text" formControlName="price" placeholder="Price" required>
+        <div class="form_control_wrapper_div">
+            <input class="form_control_input_element" id="price" type="text" formControlName="price" placeholder="Price" required>
             <label for="price">Price</label>
           </div>
       
@@ -65,11 +69,11 @@
         <div class="form-floating mb-3">
             <div class="form-check">
                 <input class="form-check-input" type="radio" formControlName="active" name="active" id="active-true" value="true" required>
-                <label class="form-check-label" for="active-true">Junior</label>
+                <label class="form-check-label" for="active-true">Active listing.</label>
               </div>
               <div class="form-check">
                 <input class="form-check-input" type="radio" formControlName="active" name="active" id="active-false" value="false">
-                <label class="form-check-label" for="active-false">Mid</label>
+                <label class="form-check-label" for="active-false">Non-active listing.</label>
               </div>
         </div>    
         <button class="btn btn-primary" type="submit" [disabled]="listingForm.invalid">Add</button>

@@ -3,6 +3,7 @@ import cors from "cors";
 import express from "express";
 import { db_connect } from "./database";
 import { listingRouter } from "./listing/listing.routes";
+import { listingImageRouter } from "./image/listing_image.routes";
 import { admin_listingRouter } from "./admin/admin_listing/admin_listing.routes";
 import { admin_userRouter } from "./admin/user/admin_user.routes";
 import { checkUserExists } from "./admin/middleware/can_register";
@@ -21,6 +22,7 @@ db_connect(ATLAS_URI)
         const app = express();
         app.use(cors());
         app.use("/listings", listingRouter);
+        app.use("/images", listingImageRouter);
         app.use("/admin/listing", admin_listingRouter);
         app.use("/admin/user", admin_userRouter);
         app.use(checkUserExists);

@@ -40,6 +40,10 @@ export class RegisterComponent implements OnInit {
     this.adminService.logout()
   }
 
+  cancel_register() {
+    this.router.navigate(['admin/admins/admincrud']);
+  }
+
   /* registerUser() {
     this.adminService.register(this.registerForm.value).subscribe((res) => {
       if (res.result) {

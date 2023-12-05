@@ -1,7 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Injectable, Input, OnInit, Output } from '@angular/core';
+import { Observable, of, scheduled, asyncScheduler } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { Listing } from 'src/app/listings/listing';
+import { ListingImage } from 'src/app/listings/listings_image';
+import { AdminService } from 'src/app/admin.service';
 
 @Component({
   selector: 'app-listing-form',
@@ -9,7 +12,17 @@ import { Listing } from 'src/app/listings/listing';
   styleUrl: './listing-form.component.css'
 })
 
+@Injectable()
 export class ListingFormComponent implements OnInit {
+  listing_form_error_message?: string;
+  selectedImage?: ListingImage;
+
+  images$: Observable<ListingImage[]> = new Observable();
+  
+  //images$?: ListingImage[];
+
+  //images$: Observable<ListingsImage[]> = of([{image_id: 111, image_name:'testimagename', image_b64:'jgggjgkjghjgjgjkjhkhkj' }]);
+
   @Input()
   initialState: BehaviorSubject<Listing> = new BehaviorSubject({});
 
@@ -20,16 +33,19 @@ export class ListingFormComponent implements OnInit {
   formSubmitted = new EventEmitter<Listing>();
 
   listingForm: FormGroup = new FormGroup({});
+  
+  constructor(private fb: FormBuilder, private adminService: AdminService) { }
 
-  constructor(private fb: FormBuilder) { }
-
-  get image() { return this.listingForm.get('image')!; }
+  /* get image_selector() { return this.listingForm.get('image_selector')!; } */
+  get image() { return this.listingForm.get('image')!; } 
   get title() { return this.listingForm.get('title')!; }
   get short_description() { return this.listingForm.get('short_description')!; }
   get price() { return this.listingForm.get('price')!; }
   get active() { return this.listingForm.get('active')!; }
 
   ngOnInit() {
+    this.fetchImages();
+
     this.initialState.subscribe(listing => {
       this.listingForm = this.fb.group({
         image: [listing.image, [Validators.required]],
@@ -40,10 +56,34 @@ export class ListingFormComponent implements OnInit {
       });
     });
   
-    this.listingForm.valueChanges.subscribe((val) => { this.formValuesChanged.emit(val); });  
+    this.listingForm.valueChanges.subscribe((val) => { this.formValuesChanged.emit(val); });
   }
 
   submitForm() {
     this.formSubmitted.emit(this.listingForm.value);
+  }
+
+  private fetchImages(): void {
+    this.adminService.getImages().subscribe({
+      next: data => {
+        //let image_response = new Observable<ListingImage[]>();
+        //image_response = data;
+
+        this.images$ = of(data);
+        
+        
+        
+        //this.images$ = data;
+        
+        //this.listingForm.controls['image_selector'].setValue(this.images$);
+       },
+      error: (error) => {
+        this.listing_form_error_message = error;
+      }      
+    });
+  }
+
+  onSelect(image: ListingImage): void {
+    this.selectedImage = image;    
   }
 }

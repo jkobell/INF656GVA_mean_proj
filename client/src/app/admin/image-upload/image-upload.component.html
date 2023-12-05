@@ -1,0 +1,13 @@
+<div class="top_placeholder"></div>
+<div>
+    <h2 class="message" *ngIf="this.image_upload_message">{{image_upload_message}}</h2>
+</div>
+<div>
+    <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
+</div>
+<div class="file-upload">{{filename || "No file selected."}} 
+    <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">Choose File</button>
+</div>
+<div>
+    <button (click)="cancel_register()" *ngIf="this.adminService.isLoggedIn" type="button" class="btn btn-primary">Exit</button>
+</div>

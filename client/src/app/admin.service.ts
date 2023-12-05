@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, Subject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { User } from './admin/user';
 import { Listing } from './listings/listing';
+import { ListingImage } from './listings/listings_image';
 
 @Injectable({
   providedIn: 'root'
@@ -13,23 +14,54 @@ export class AdminService {
   API_URL: string = 'http://localhost:4242';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   currentUser = {};
+  private images$: Subject<ListingImage[]> = new Subject();
+  private listings$: Subject<Listing[]> = new Subject();
 
   constructor(private httpClient: HttpClient, public router: Router){}
 
+  private refreshListings() {
+    this.httpClient.get<Listing[]>(`${this.API_URL}/admin/listing`)
+      .subscribe(listings => {
+        this.listings$.next(listings);
+      });
+  }
+  
+  getListings(): Subject<Listing[]> {
+    this.refreshListings();
+    return this.listings$;
+  }
+
+  private refreshImages() {
+    this.httpClient.get<ListingImage[]>(`${this.API_URL}/images`)
+      .subscribe(images => {
+        this.images$.next(images);
+      });
+  }
+  
+  getImages(): Subject<ListingImage[]> {
+    this.refreshImages();
+    return this.images$;
+  }
+
+  createImage(image: ListingImage): Observable<any> {
+    return this.httpClient.post(`${this.API_URL}/images`, image, { headers: this.headers });
+  } 
+
   getListing(id: string): Observable<Listing> {
-    return this.httpClient.get<Listing>(`${this.API_URL}/listings/${id}`);
+    return this.httpClient.get<Listing>(`${this.API_URL}/listings${id}`);
   }
   
-  createListing(listing: Listing): Observable<any> {
-    return this.httpClient.post(`${this.API_URL}/listings`, listing, { headers: this.headers });
+  /* createListing(listing: Listing): Observable<any> { */
+  createListing(listing: any): Observable<any> {
+    return this.httpClient.post(`${this.API_URL}/admin/listing`, listing, { headers: this.headers });
   }
   
-  updateListing(id: string, listing: Listing): Observable<any> {
-    return this.httpClient.put(`${this.API_URL}/listings/${id}`, listing, { headers: this.headers });
+  updateListing(listing: Listing): Observable<any> {
+    return this.httpClient.put(`${this.API_URL}/admin/listing`, listing, { headers: this.headers });
   }
   
   deleteListing(id: string): Observable<any> {
-    return this.httpClient.delete(`${this.API_URL}/listings/${id}`, { headers: this.headers });
+    return this.httpClient.delete(`${this.API_URL}/admin/listing/${id}`, { headers: this.headers });
   }
 
   /* register(user: User): Observable<any> {

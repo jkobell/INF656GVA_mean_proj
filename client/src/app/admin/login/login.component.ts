@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
     public adminService: AdminService,
     public router: Router
   ) {
-    this.loginForm= this.formBuilder.group({
+    this.loginForm = this.formBuilder.group({
       email: [''],
       password: ['']
     })

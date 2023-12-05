@@ -2,4 +2,27 @@
     max-width: 560px;
     margin-left: auto;
     margin-right: auto;
+    border: 1px solid black;
+    padding: .5em;
+    background-color: #a5caed;
+    margin-bottom: .6em;
+}
+
+.form_control_wrapper_div {
+padding: .1em;  
+}
+
+.form_control_input_element {
+width: 300px;
+padding: .3em;
+}
+
+.form_control_select_element {
+width: 312px;
+padding: .3em;
+}
+
+label {
+margin-left: .5em;
+font-weight: 500;
 }

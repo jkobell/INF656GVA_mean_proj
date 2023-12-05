@@ -1,2 +1,6 @@
-<h2 class="text-center m-5">Add a New Listing</h2>
+<div class="top_placeholder"></div>
+<div class="listing_maintenance_header">Add a New Listing</div>
+<div>
+    <h2 class="message" *ngIf="this.add_listing_message">{{add_listing_message}}</h2>
+</div>
 <app-listing-form (formSubmitted)="addListing($event)"></app-listing-form>

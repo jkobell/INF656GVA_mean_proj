@@ -50,16 +50,16 @@ async function schema_validate_listing(db: mongodb.Db) {
                     description: "short_description of listing is required and is a string",
                 },
                 price: {
-                    bsonType: "decimal128",
-                    description: "price of listing is required and is a decimal128",
+                    bsonType: "string",
+                    description: "price of listing is required and is a string",
                 },
                 image: {
                     bsonType: "string",
                     description: "image of listing is required and is a base64 string",
                 },
                 active: {
-                    bsonType: "bool",
-                    description: "active status of listing is required and is a boolean",
+                    bsonType: "string",
+                    description: "active status of listing is required and is a string",
                 },
             } 
         }

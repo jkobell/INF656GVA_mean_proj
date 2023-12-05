@@ -1,6 +1,12 @@
 <div class="top_placeholder"></div>
-<app-register></app-register>
+<!-- <app-register></app-register> -->
 <h1>admincrud works!</h1>
+<div>
+    <button (click)="register()" *ngIf="this.adminService.isLoggedIn" type="button" class="btn btn-primary">Register Admin</button>
+</div>
+<div>
+    <button (click)="image_upload()" *ngIf="this.adminService.isLoggedIn" type="button" class="btn btn-primary">Upload Images</button>
+</div>
 <div>
     <button (click)="logout()" *ngIf="this.adminService.isLoggedIn" type="button" class="btn btn-primary">Logout</button>
 </div>

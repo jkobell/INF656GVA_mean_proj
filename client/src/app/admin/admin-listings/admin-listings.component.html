@@ -1,0 +1,129 @@
+<div class="top_placeholder"></div>
+<div class="listing_maintenance_header_container">
+    <div class="admin_nav_div">
+        <button class="nav_button" (click)="adminNavAddListing()">Add Listing</button>
+        <button class="nav_button" (click)="adminNavUploadImage()">Upload Image</button>
+        <button class="nav_button" (click)="adminLogout()">Logout</button>
+        <button class="nav_button" (click)="clientMenu()">Client Menu</button>
+    </div>
+    <div class="title_div">Admin Listings Maintenance</div>
+    <div class="admin_message_div">
+        <div class="admin_message" *ngIf="this.adminlisting_form_message">{{adminlisting_form_message}}</div>
+    </div>
+</div>
+<div class="listing_form_wrapper">
+    <!-- <app-listing-form [initialState]="$formListing" (formSubmitted)="adminUpdateListing($event)"></app-listing-form> -->
+    <form class="listing-form" autocomplete="off" [formGroup]="listingForm" (ngSubmit)="submitUpdateForm(listingForm)">
+        <input [hidden]="true" formControlName="id" [value]="id.value">
+        <div class="form_control_wrapper_div">
+            <!-- <input class="form-control" type="text" id="image" formControlName="image" placeholder="Image" required> -->
+            <!-- <select formControlName="image_selector" id="image"> -->
+            <select class="form_control_select_element" formControlName="image" id="image">
+              <!-- <option *ngFor="let image of images$ | async" [ngValue]="image.image_name"> -->
+                <option *ngFor="let image of images$ | async" [ngValue]="image.image">{{ image.name }} | {{ image.size }}</option>          
+            </select>
+            <label for="image">Image</label>
+        </div>
+        <div class="form_control_wrapper_div">
+            <input class="form_control_input_element" id="title" type="text" formControlName="title" placeholder="Title" required [value]="title.value">
+            <label for="title">Title</label>
+        </div>
+        <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert alert-danger">    
+            <div *ngIf="title.errors?.['required']">
+                Title is required.
+            </div>
+            <div *ngIf="title.errors?.['maxlength']">
+                Title can be at most 50 characters long.
+            </div>
+        </div>
+      
+          <!-- short_description -->
+          <div class="form_control_wrapper_div">
+            <input class="form_control_input_element" id="short_description" type="text" formControlName="short_description" placeholder="Short description" required>
+            <label for="short_description">Details</label>
+          </div>
+        
+        <div *ngIf="short_description.invalid && (short_description.dirty || short_description.touched)" class="alert alert-danger">
+    
+            <div *ngIf="short_description.errors?.['required']">
+            Short description is required.
+            </div>
+            <div *ngIf="short_description.errors?.['maxlength']">
+                Short description can be at most 100 characters long.
+            </div>
+        </div>
+      
+      
+      
+          <!-- price -->
+          <div class="form_control_wrapper_div">
+            <input class="form_control_input_element" id="price" type="text" formControlName="price" placeholder="Price" required>
+            <label for="price">Price</label>
+          </div>
+        
+          <div *ngIf="price.invalid && (price.dirty ||price.touched)" class="alert alert-danger">  
+            <div *ngIf="price.errors?.['required']">
+                Price is required.
+            </div>        
+          </div>
+      
+      
+      
+      
+          <!-- active -->
+          <div class="form-floating mb-3">
+              <div class="form-check">
+                  <input class="form-check-input" type="radio" formControlName="active" name="active" id="active-true" value="true" required>
+                  <label class="form-check-label" for="active-true">Active listing.</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" formControlName="active" name="active" id="active-false" value="false">
+                  <label class="form-check-label" for="active-false">Inactive listing.</label>
+                </div>
+          </div>
+          <div class="admin_form_buttons_wrapper_div">
+            <button class="admin_form_button" type="submit" [disabled]="listingForm.invalid">Update</button>
+            <button class="admin_form_button" (click)="cancelUpdate($event)">Cancel</button>
+          </div>          
+    </form>
+</div>
+<div class="listings_content">
+    <ul class="listings">
+        <li class="listing_container" *ngFor="let listing of listings$ | async">
+            <!-- <div class="listing_container"> -->
+                <!-- <img class="listing_img" src={{listing.listing_id}}> -->
+                <!-- <img class="listing_img" src="assets/listings_images/large_catfish.jpg"> -->
+                <!-- <img class="listing_img" src="data:image/jpg;base64, {{listings_images[0].image_b64}}"> -->
+                <img class="listing_img" src="data:image/jpg;base64, {{listing.image}}">
+                <div class="listing_text_container">
+                    <span class="listing_title">{{listing.title}}</span>
+                    <!-- <span class="listing_title">Large Fried Catfish Plate</span> -->
+                    <span class="short_description">{{listing.short_description}}</span>
+                    <!-- <span class="short_description">5 Catfish fillets, fries and cole slaw.</span> -->
+                </div>
+                <div class="add_price_container">
+                    <span class="add">
+                        <button class="add_button">Add</button>
+                    </span>
+                    <!-- <span class="price">{{listing.price}}</span> -->
+                    <span class="price">{{ listing.price }}</span>
+                </div>
+                <div class="maintenance_controls_container">
+                    <span class="maintenance_control_update">
+                        <button class="maintenance_button" (click)="updateListingForm(listing)">Update</button>
+                    </span>
+                    <span class="maintenance_control_delete">
+                        <button class="maintenance_button" (click)="deleteFormListing(listing._id!)">Delete</button>
+                    </span>
+                    <div class="active_status_div">
+                        <!-- <div class="admin_message" *ngIf="listing.active"> -->
+                            <div class="active_status_title">Active:</div>
+                            <div class="active_status_bool">{{listing.active}}</div>
+
+                        <!-- </div> -->
+                    </div>
+                </div>
+            <!-- </div> -->
+        </li>
+    </ul>
+</div>

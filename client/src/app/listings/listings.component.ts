@@ -3,8 +3,8 @@ import { Listing } from './listing';
 import { Observable } from 'rxjs';
 import { ListingService } from '../listing.service'; 
 
-import { LISTINGS } from './mock_listings';
-import { LISTINGS_IMAGES } from './mock_listings_images';
+//import { LISTINGS } from './mock_listings';
+//import { LISTINGS_IMAGES } from './mock_listings_images';
 //import { setContentContainerSize } from 'set_content_container_size';
 //import { runThis } from 'set_content_container_size';
 
@@ -26,16 +26,16 @@ import { LISTINGS_IMAGES } from './mock_listings_images';
   constructor(private listingService: ListingService) { }
   
   ngOnInit(): void {
-    this.fetchEmployees();
+    this.fetchListings();
   }
   
-  deleteEmployee(id: string): void {
+  /* deleteListing(id: string): void {
     this.listingService.deleteListing(id).subscribe({
-      next: () => this.fetchEmployees()
+      next: () => this.fetchListings()
     });
-  }
+  } */
   
-  private fetchEmployees(): void {
+  private fetchListings(): void {
     this.listings$ = this.listingService.getListings();
   }
 
