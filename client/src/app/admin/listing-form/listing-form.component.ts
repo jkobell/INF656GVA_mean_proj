@@ -14,7 +14,7 @@ import { AdminService } from 'src/app/admin.service';
 
 @Injectable()
 export class ListingFormComponent implements OnInit {
-  listing_form_error_message?: string;
+  listing_form_message?: string;
   selectedImage?: ListingImage;
 
   images$: Observable<ListingImage[]> = new Observable();
@@ -60,27 +60,23 @@ export class ListingFormComponent implements OnInit {
   }
 
   submitForm() {
-    this.formSubmitted.emit(this.listingForm.value);
+    this.formSubmitted.emit(this.listingForm.value); 
   }
 
   private fetchImages(): void {
     this.adminService.getImages().subscribe({
       next: data => {
-        //let image_response = new Observable<ListingImage[]>();
-        //image_response = data;
-
         this.images$ = of(data);
-        
-        
-        
-        //this.images$ = data;
-        
-        //this.listingForm.controls['image_selector'].setValue(this.images$);
        },
       error: (error) => {
-        this.listing_form_error_message = error;
+        this.listing_form_message = error;
       }      
     });
+  }
+
+  cancelAdd(e: Event) {
+    e.preventDefault();
+    this.listingForm.reset();
   }
 
   onSelect(image: ListingImage): void {

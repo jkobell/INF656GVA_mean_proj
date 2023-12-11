@@ -2,25 +2,42 @@
 <div class="listings_content">
     <ul class="listings">
         <li class="listing_container" *ngFor="let listing of listings$ | async">
-            <!-- <div class="listing_container"> -->
-                <!-- <img class="listing_img" src={{listing.listing_id}}> -->
-                <!-- <img class="listing_img" src="assets/listings_images/large_catfish.jpg"> -->
-                <!-- <img class="listing_img" src="data:image/jpg;base64, {{listings_images[0].image_b64}}"> -->
-                <img class="listing_img" src="data:image/jpg;base64, {{listing.image}}">
-                <div class="listing_text_container">
-                    <span class="listing_title">{{listing.title}}</span>
-                    <!-- <span class="listing_title">Large Fried Catfish Plate</span> -->
-                    <span class="short_description">{{listing.short_description}}</span>
-                    <!-- <span class="short_description">5 Catfish fillets, fries and cole slaw.</span> -->
+            <div class="list_item_wrapper">
+                <div class="listing_image_wrapper">
+                    <img class="listing_img" src="data:image/jpg;base64, {{listing.image}}">
                 </div>
-                <div class="add_price_container">
-                    <span class="add">
+                <div class="add_price_container">                    
+                    <div class="price_wrapper">
+                        <div class="price">{{ listing.price }}</div>
+                    </div>
+                    <div class="add_button_wrapper">
                         <button class="add_button">Add</button>
-                    </span>
-                    <!-- <span class="price">{{listing.price}}</span> -->
-                    <span class="price">{{ listing.price }}</span>
+                    </div>
                 </div>
-            <!-- </div> -->
+                <div class="listing_text_container">
+                    <div class="listing_title">{{listing.title}}</div>
+                    <div class="short_description">{{listing.short_description}}</div>
+                </div>                                
+            </div>
+            <div class="rwd_list_item_wrapper">
+                <div class="rwd_row_0">             
+                    <div class="listing_image_wrapper">
+                        <img class="listing_img" src="data:image/jpg;base64, {{listing.image}}">
+                    </div>                   
+                    <div class="listing_text_container">
+                        <div class="listing_title">{{listing.title}}</div>
+                        <div class="short_description">{{listing.short_description}}</div>
+                    </div>
+                </div>            
+                <div class="add_price_container">                
+                    <div class="price_wrapper">
+                        <div class="price">{{ listing.price }}</div>
+                    </div>
+                    <div class="add_button_wrapper">
+                        <button class="add_button">Add</button>
+                    </div>                
+                </div>
+            </div>                        
         </li>
     </ul>
 </div>

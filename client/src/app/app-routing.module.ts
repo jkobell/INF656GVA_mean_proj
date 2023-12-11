@@ -26,10 +26,10 @@ const routes: Routes = [
   { path: 'admin', redirectTo: 'admin/login', pathMatch: 'full' },
   { path: 'admin/login', component: LoginComponent },
   { path: 'admin/register', component: RegisterComponent, canActivate: [AdminCrudAuthGuard] },
-  { path: 'admin/image-upload', component: ImageUploadComponent, canActivate: [AdminCrudAuthGuard] },
+  { path: 'admin/image-upload', component: ImageUploadComponent, canActivate: [AdminAuthGuard] },
   { path: 'admin/admins/adminru', component: AdminruComponent, canActivate: [AdminAuthGuard] },
   { path: 'admin/admins/admincrud', component: AdmincrudComponent, canActivate: [AdminCrudAuthGuard] },
-  { path: 'admin/add-listing', component: AddListingComponent, canActivate: [AdminCrudAuthGuard] },
+  { path: 'admin/add-listing', component: AddListingComponent, canActivate: [AdminAuthGuard] },
   { path: 'admin/update-listing', component: UpdateListingComponent, canActivate: [AdminAuthGuard] },
   { path: 'admin/admin-listings', component: AdminListingsComponent, canActivate: [AdminAuthGuard] },
   { path: '**', component: PageNotFoundComponent}

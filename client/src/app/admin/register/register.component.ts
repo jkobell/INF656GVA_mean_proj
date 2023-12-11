@@ -19,7 +19,11 @@ import { AdminService } from 'src/app/admin.service';
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
-  login_error_message?: string;
+  register_error_message?: string;
+
+  nav_wrapper_div!: HTMLElement;
+  nav_select!: HTMLElement;
+  nav_img!: HTMLElement;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -33,7 +37,13 @@ export class RegisterComponent implements OnInit {
     })
   }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    this.nav_wrapper_div = document.querySelector("div[class='rwd_nav_wrapper_div']") as HTMLElement;
+    this.nav_select = this.nav_wrapper_div.querySelector("select[class='rwd_nav_select']") as HTMLElement;
+    this.nav_img  = this.nav_wrapper_div.querySelector("img[class='rwd_nav_icon']") as HTMLElement;
+    this.nav_select.style.cssText += 'display: none';
+    this.nav_img.style.cssText += 'display: block';
+  }
 
   
   logout() {
@@ -61,28 +71,38 @@ export class RegisterComponent implements OnInit {
         }
       },
       error: (error) => {
-        this.login_error_message = error;
+        this.register_error_message = error;
       }      
     });
   }
-  /* registerUser() {
-    const user_registration = new Promise<void>((resolve) => {
-      this.adminService.register(this.registerForm.value)
-      resolve();
-    });
-    user_registration.then(() => {
-      this.registerForm.reset()
-      this.router.navigate(['login']);
-    })    
-  } */
-    /* .next()
-      if (res.status === 201) {
-        let hh = 'kkk';
-      }
-      if (res.result) {
-        this.registerForm.reset()
-        this.router.navigate(['login']);
-      }
-    })
-  } */
+  onSelectOption(selection: string): void {
+    switch (selection) {
+      case 'upload_image':
+        this.adminService.adminNavUploadImage();
+        break;
+      case 'update_listing':
+        this.adminService.adminNavUpdateListing();
+        break;
+      case 'client_menu':
+        this.adminService.clientMenu();
+        break;
+      case 'admin_home':
+        this.adminService.adminHome();
+        break;
+      case 'logout':
+        this.adminService.adminLogout();
+        break;
+    }
+  }
+
+  menuOpen(event: Event): void {
+    this.nav_img.style.cssText += 'display: none';
+    this.nav_select.style.cssText += 'display: block';
+    this.nav_select.focus();
+  }
+
+  onBlur(): void {
+    this.nav_img.style.cssText += 'display: block';
+    this.nav_select.style.cssText += 'display: none';
+  }
 }

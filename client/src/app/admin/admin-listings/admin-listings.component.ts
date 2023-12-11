@@ -17,6 +17,7 @@ import { AdminService } from 'src/app/admin.service';
   //providers: [ListingFormComponent]
 })
 export class AdminListingsComponent implements OnInit {
+  /* isAdminCrud: boolean = this.adminService.isCrudLoggedIn; */
   listing_id!: string;
   adminlisting_form_message?: string;
   $formListing: BehaviorSubject<Listing> = new BehaviorSubject({});
@@ -29,6 +30,9 @@ export class AdminListingsComponent implements OnInit {
   //listingFormComponent: ListingFormComponent;
   //updateListing!: UpdateListingComponent
   images$: Observable<ListingImage[]> = new Observable();
+  nav_wrapper_div!: HTMLElement;
+  nav_select!: HTMLElement;
+  nav_img!: HTMLElement;
 
   @Input()
   initialState: BehaviorSubject<Listing> = new BehaviorSubject({});
@@ -45,8 +49,9 @@ export class AdminListingsComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private listingService: ListingService,
-    private adminService: AdminService,
+    public adminService: AdminService,
     public router: Router
+    
     //private updateListing: UpdateListingComponent
     //private listingFormComponent: ListingFormComponent
   ) { }
@@ -58,9 +63,9 @@ export class AdminListingsComponent implements OnInit {
   get price() { return this.listingForm.get('price')!; }
   get active() { return this.listingForm.get('active')!; }
   
-  ngOnInit(): void {
-    this.fetchListings();
+  ngOnInit(): void {  
     this.fetchImages();
+    this.fetchListings();
 
     this.initialState.subscribe(listing => {
       this.listingForm = this.fb.group({
@@ -72,6 +77,12 @@ export class AdminListingsComponent implements OnInit {
         active: [listing.active, [Validators.required]]        
       });
     });
+
+    this.nav_wrapper_div = document.querySelector("div[class='rwd_nav_wrapper_div']") as HTMLElement;
+    this.nav_select = this.nav_wrapper_div.querySelector("select[class='rwd_nav_select']") as HTMLElement;
+    this.nav_img  = this.nav_wrapper_div.querySelector("img[class='rwd_nav_icon']") as HTMLElement;
+    this.nav_select.style.cssText += 'display: none';
+    this.nav_img.style.cssText += 'display: block';
   }
 
   submitUpdateForm(form: FormGroup<any>) {
@@ -106,8 +117,8 @@ export class AdminListingsComponent implements OnInit {
     });
   }
 
-  /* onSelect(listing: Listing): void {
-    this.selectedListing = listing;    
+  /* isAdminCrud(): boolean {
+    return this.adminService.isCrudLoggedIn ? true : false;    
   } */
 
   updateListingForm(selectedListing: Listing) {
@@ -182,6 +193,38 @@ export class AdminListingsComponent implements OnInit {
       }      
     });
   }
+
+  onSelectOption(selection: string): void {
+    switch (selection) {
+      case 'upload_image':
+        this.adminService.adminNavUploadImage();
+        break;
+      case 'add_listing':
+        this.adminService.adminNavAddListing();
+        break;
+      case 'client_menu':
+        this.adminService.clientMenu();
+        break;
+      case 'admin_home':
+        this.adminService.adminHome();
+        break;
+      case 'logout':
+        this.adminService.adminLogout();
+        break;
+    }
+  }
+
+  menuOpen(event: Event): void {
+    this.nav_img.style.cssText += 'display: none';
+    this.nav_select.style.cssText += 'display: block';
+    this.nav_select.focus();
+  }
+
+  onBlur(): void {
+    this.nav_img.style.cssText += 'display: block';
+    this.nav_select.style.cssText += 'display: none';
+  }
+
   adminNavAddListing() {
     this.router.navigate(['admin/add-listing']);    
   }
@@ -194,6 +237,10 @@ export class AdminListingsComponent implements OnInit {
   clientMenu() {
     this.router.navigate(['menu']);
   }
+  adminHome() {
+    this.adminService.isAdminCrud ? this.router.navigate(['admin/admins/admincrud']) : this.router.navigate(['admin/admins/adminru'])    
+  }
+
   cancelUpdate(e: Event) {
     e.preventDefault();
     this.listingForm.reset();

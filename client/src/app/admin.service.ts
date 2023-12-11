@@ -1,3 +1,4 @@
+import { Component, OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
@@ -10,7 +11,10 @@ import { ListingImage } from './listings/listings_image';
 @Injectable({
   providedIn: 'root'
 })
-export class AdminService {
+export class AdminService implements OnInit {
+  isAdminCrud!: boolean;
+  /* isAdminCrud: boolean = this.isCrudLoggedIn; */
+  /* isAdminCrud: Promise<boolean> = this.isCrudLoggedIn; */
   API_URL: string = 'http://localhost:4242';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   currentUser = {};
@@ -18,6 +22,18 @@ export class AdminService {
   private listings$: Subject<Listing[]> = new Subject();
 
   constructor(private httpClient: HttpClient, public router: Router){}
+
+  ngOnInit(): void {
+    this.initIsCrudLoggedIn(); 
+  }
+
+  async initIsCrudLoggedIn(): Promise<boolean> {
+    /* const isAdminCrudLoggedIn = await this.isCrudLoggedIn();
+    this.isAdminCrud = isAdminCrudLoggedIn; */
+    //const isAdminCrudLoggedIn = 
+    return this.isAdminCrud = await this.isCrudLoggedInAsync();
+    //return isAdminCrudLoggedIn;
+  }
 
   private refreshListings() {
     this.httpClient.get<Listing[]>(`${this.API_URL}/admin/listing`)
@@ -115,7 +131,7 @@ export class AdminService {
   }
 
   get isCrudLoggedIn(): boolean {
-    let authToken = localStorage.getItem('access_token');
+  let authToken = localStorage.getItem('access_token');
     if (authToken) {
         try {
           let jwt_payload = JSON.parse(atob(authToken.split('.')[1]));
@@ -127,6 +143,30 @@ export class AdminService {
     else {
       return false;
     }
+  }
+  
+  isCrudLoggedInAsync(): Promise<boolean> {
+    let crud_login = new Promise<boolean>((resolve) => {
+      let authToken = localStorage.getItem('access_token');
+      if (authToken) {
+        try {
+          let jwt_payload = JSON.parse(atob(authToken.split('.')[1]));
+          /* return jwt_payload.role === 'crud' ? true : false; */
+          resolve(jwt_payload.role === 'crud' ? true : false);
+          /* return crud_login; */
+        } catch (e) {
+         /*  return false; */
+         resolve(false);
+         /* return crud_login; */
+        }
+      }
+      else {
+        //return false;
+        resolve(false);
+        /* return crud_login; */
+      }
+    });
+    return crud_login;    
   }
   
 
@@ -143,6 +183,29 @@ export class AdminService {
       }),
       catchError(this.handleError)
     )
+  }
+
+  registerAdmin() {
+    this.router.navigate(['admin/register']);
+  }
+
+  adminNavAddListing() {
+    this.router.navigate(['admin/add-listing']);    
+  }
+  adminNavUploadImage() {
+    this.router.navigate(['admin/image-upload']);
+  }
+  adminNavUpdateListing() {
+    this.router.navigate(['admin/admin-listings']);
+  }
+  adminLogout() {
+    this.logout();
+  }
+  clientMenu() {
+    this.router.navigate(['menu']);
+  }
+  adminHome() {
+    this.isAdminCrud ? this.router.navigate(['admin/admins/admincrud']) : this.router.navigate(['admin/admins/adminru'])    
   }
 
   handleError(error: HttpErrorResponse) {

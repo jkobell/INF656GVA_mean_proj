@@ -152,6 +152,9 @@ footer ul {
 @media screen and (max-width: 767px) {  
   .wrapper {
     width: 100%;
+  }
+  .business_address {
+    padding-right: .5em;
   }  
 }
 

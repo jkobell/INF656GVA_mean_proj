@@ -1,4 +1,7 @@
 <div class="listing_form_wrapper">
+    <div class="admin_form_message_wrapper">
+      <div class="admin_update_message" *ngIf="this.listing_form_message">{{listing_form_message}}</div>
+    </div>
     <form class="listing-form" autocomplete="off" [formGroup]="listingForm" (ngSubmit)="submitForm()">
         <!-- image -->
         <div class="form_control_wrapper_div">
@@ -75,7 +78,10 @@
                 <input class="form-check-input" type="radio" formControlName="active" name="active" id="active-false" value="false">
                 <label class="form-check-label" for="active-false">Non-active listing.</label>
               </div>
-        </div>    
-        <button class="btn btn-primary" type="submit" [disabled]="listingForm.invalid">Add</button>
+        </div>
+        <div class="admin_form_buttons_wrapper_div">
+          <button class="admin_form_button" type="submit" [disabled]="listingForm.invalid">Add</button>
+          <button class="admin_form_button" (click)="cancelAdd($event)">Cancel</button>
+        </div>        
     </form>
 </div>

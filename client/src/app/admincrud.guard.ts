@@ -11,7 +11,16 @@ class AdminCrudPermissionsService {
   constructor(private router: Router, private adminService: AdminService) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if (this.adminService.isCrudLoggedIn !== true) {
+    /* let result: Boolean;
+    async () => {
+      result = await this.adminService.isCrudLoggedIn();
+      if (result !== true) {
+        window.alert("Access not allowed!");
+        this.router.navigate(['admin/login']);
+      }
+    } */
+    
+    if (this.adminService.isCrudLoggedIn !== true) {    
       window.alert("Access not allowed!");
       this.router.navigate(['admin/login']);
     }

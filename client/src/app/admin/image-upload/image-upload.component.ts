@@ -9,27 +9,28 @@ import { ListingImage } from 'src/app/listings/listings_image';
   templateUrl: './image-upload.component.html',
   styleUrl: './image-upload.component.css'
 })
-export class ImageUploadComponent {
+export class ImageUploadComponent implements OnInit {
   image_upload_message?: string;
   //uploadImageForm: FormGroup;
   filename?: string;
   public uploadImage = {} as ListingImage;
 
+  nav_wrapper_div!: HTMLElement;
+  nav_select!: HTMLElement;
+  nav_img!: HTMLElement;
+
   constructor(
     //public formBuilder: FormBuilder,
     public adminService: AdminService,
     public router: Router
-  ) {
-    /* this.uploadImage.name = '',
-    this.uploadImage.description = '',
-    this.uploadImage.size = '',
-    this.uploadImage.image = '' */
-    /* this.uploadImageForm = this.formBuilder.group({
-    name: [''],
-    description: [''],
-    size: [''],
-    image: ['']
-  }) */
+  ) { }
+
+  ngOnInit(): void {
+    this.nav_wrapper_div = document.querySelector("div[class='rwd_nav_wrapper_div']") as HTMLElement;
+    this.nav_select = this.nav_wrapper_div.querySelector("select[class='rwd_nav_select']") as HTMLElement;
+    this.nav_img  = this.nav_wrapper_div.querySelector("img[class='rwd_nav_icon']") as HTMLElement;
+    this.nav_select.style.cssText += 'display: none';
+    this.nav_img.style.cssText += 'display: block';
   }
 
   cancel_register() {
@@ -57,11 +58,6 @@ export class ImageUploadComponent {
 
       this.createImage();
       
-      
-
-      //const upload$ = this.http.post("/api/thumbnail-upload", formData);
-
-      //upload$.subscribe();
     }
   }
 
@@ -101,5 +97,36 @@ export class ImageUploadComponent {
         this.image_upload_message = error;
       }      
     });
+  }
+
+  onSelectOption(selection: string): void {
+    switch (selection) {
+      case 'add_listing':
+        this.adminService.adminNavAddListing();
+        break;
+      case 'update_listing':
+        this.adminService.adminNavUpdateListing();
+        break;
+      case 'client_menu':
+        this.adminService.clientMenu();
+        break;
+      case 'admin_home':
+        this.adminService.adminHome();
+        break;
+      case 'logout':
+        this.adminService.adminLogout();
+        break;
+    }
+  }
+
+  menuOpen(event: Event): void {
+    this.nav_img.style.cssText += 'display: none';
+    this.nav_select.style.cssText += 'display: block';
+    this.nav_select.focus();
+  }
+
+  onBlur(): void {
+    this.nav_img.style.cssText += 'display: block';
+    this.nav_select.style.cssText += 'display: none';
   }
 }

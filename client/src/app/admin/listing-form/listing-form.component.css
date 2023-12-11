@@ -4,25 +4,49 @@
     margin-right: auto;
     border: 1px solid black;
     padding: .5em;
-    background-color: #a5caed;
-    margin-bottom: .6em;
+    background-color:rgb(189, 189, 189);
+    /* background-color: #a5caed; */
+    /* margin-bottom: .6em; */
+}
+
+.admin_form_message_wrapper {
+    height: 2em;
 }
 
 .form_control_wrapper_div {
-padding: .1em;  
+    padding: .1em;  
 }
 
 .form_control_input_element {
-width: 300px;
-padding: .3em;
+    width: 300px;
+    padding: .3em;
 }
 
 .form_control_select_element {
-width: 312px;
-padding: .3em;
+    width: 312px;
+    padding: .3em;
 }
 
 label {
-margin-left: .5em;
-font-weight: 500;
+    margin-left: .5em;
+    font-weight: 500;
+}
+
+.admin_form_buttons_wrapper_div {
+    display: flex;
+    justify-content: start;
+    margin-top: .5em;
+}
+  
+.admin_form_button {
+    min-width: 6em;
+    padding:.2em .4em;
+    margin-left: 1em;
+    border-radius: 5px;
+    background-color: #a5caed;
+}
+
+.admin_form_button:hover {
+    background-color: #2897fe;
+    color: white;
 }

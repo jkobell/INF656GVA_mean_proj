@@ -1,13 +1,49 @@
 <div class="top_placeholder"></div>
-<div>
-    <h2 class="message" *ngIf="this.image_upload_message">{{image_upload_message}}</h2>
+<div class="listing_maintenance_header_container">
+    <div class="admin_nav_div">
+        <button class="nav_button" (click)="this.adminService.adminNavAddListing()">Add Listing</button>
+        <button class="nav_button" (click)="this.adminService.adminNavUpdateListing()">Update Listing</button>
+        <button class="nav_button" (click)="this.adminService.clientMenu()">Client Menu</button>
+    </div>
+    <div class="title_div">Upload Image</div>
+    <div class="admin_message_div">
+        <div class="message_div" *ngIf="this.adminService.isAdminCrud">Admin Level: CRUD</div>
+        <div class="message_div" *ngIf="!this.adminService.isAdminCrud">Admin Level: CRU</div>
+        <button class="nav_button" (click)="this.adminService.adminHome()">Admin Home</button>
+        <button class="nav_button" (click)="this.adminService.adminLogout()">Logout</button>
+    </div>
 </div>
-<div>
-    <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
+<div class="rwd_header_wrapper">
+    <div class="rwd_nav_wrapper_div">
+        <img class="rwd_nav_icon" (click)="menuOpen($event)" width="20" src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMTYiIHdpZHRoPSIxNCIgdmlld0JveD0iMCAwIDQ0OCA1MTIiPjwhLS0hRm9udCBBd2Vzb21lIEZyZWUgNi41LjEgYnkgQGZvbnRhd2Vzb21lIC0gaHR0cHM6Ly9mb250YXdlc29tZS5jb20gTGljZW5zZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tL2xpY2Vuc2UvZnJlZSBDb3B5cmlnaHQgMjAyMyBGb250aWNvbnMsIEluYy4tLT48cGF0aCBvcGFjaXR5PSIxIiBmaWxsPSIjMUUzMDUwIiBkPSJNMCA5NkMwIDc4LjMgMTQuMyA2NCAzMiA2NEg0MTZjMTcuNyAwIDMyIDE0LjMgMzIgMzJzLTE0LjMgMzItMzIgMzJIMzJDMTQuMyAxMjggMCAxMTMuNyAwIDk2ek0wIDI1NmMwLTE3LjcgMTQuMy0zMiAzMi0zMkg0MTZjMTcuNyAwIDMyIDE0LjMgMzIgMzJzLTE0LjMgMzItMzIgMzJIMzJjLTE3LjcgMC0zMi0xNC4zLTMyLTMyek00NDggNDE2YzAgMTcuNy0xNC4zIDMyLTMyIDMySDMyYy0xNy43IDAtMzItMTQuMy0zMi0zMnMxNC4zLTMyIDMyLTMySDQxNmMxNy43IDAgMzIgMTQuMyAzMiAzMnoiLz48L3N2Zz4='/>
+        <select class="rwd_nav_select" #nav size="5" (change)="onSelectOption(nav.value)" (blur)="onBlur()">
+            <option class="rwd_option" value="add_listing">Add Listing</option>
+            <option class="rwd_option" value="update_listing">Update Listing</option>
+            <option class="rwd_option" value="client_menu">Client Menu</option>
+            <option class="rwd_option" value="admin_home">Admin Home</option>
+            <option class="rwd_option" value="logout">Logout</option>
+        </select>
+    </div>
+    <div>
+        <div class="message_div" *ngIf="this.adminService.isAdminCrud">Admin Level: CRUD</div>
+        <div class="message_div" *ngIf="!this.adminService.isAdminCrud">Admin Level: CRU</div>
+    </div>
 </div>
-<div class="file-upload">{{filename || "No file selected."}} 
-    <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">Choose File</button>
+<div class="listing_form_wrapper">
+    <div class="admin_form_message_wrapper">
+        <div class="admin_update_message" *ngIf="this.image_upload_message">{{image_upload_message}}</div>
+    </div>
+    <div>
+        <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
+    </div>
+    <div class="image_file_upload">{{filename || "Image file select: "}} 
+        <button class="admin_form_button" type="button" (click)="fileUpload.click()">Choose File</button>
+    </div>
+    <!-- <div>
+        <button class="admin_form_button" type="button" (click)="cancel_register()" *ngIf="this.adminService.isLoggedIn">Exit</button>
+    </div> -->
 </div>
-<div>
-    <button (click)="cancel_register()" *ngIf="this.adminService.isLoggedIn" type="button" class="btn btn-primary">Exit</button>
+<div class="content_wrapper">
+
 </div>
+
