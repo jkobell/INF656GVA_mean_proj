@@ -7,8 +7,8 @@
     </div>
     <div class="title_div">Add Listing</div>
     <div class="admin_message_div">
-        <div class="message_div" *ngIf="this.adminService.isAdminCrud">Admin Level: CRUD</div>
-        <div class="message_div" *ngIf="!this.adminService.isAdminCrud">Admin Level: CRU</div>
+        <div class="message_div" *ngIf="this.adminService.isCrudLoggedIn">Admin Level: CRUD</div>
+        <div class="message_div" *ngIf="!this.adminService.isCrudLoggedIn">Admin Level: CRU</div>
         <button class="nav_button" (click)="this.adminService.adminHome()">Admin Home</button>
         <button class="nav_button" (click)="this.adminService.adminLogout()">Logout</button>
     </div>
@@ -26,8 +26,8 @@
         </select>
     </div>
     <div>
-        <div class="message_div" *ngIf="this.adminService.isAdminCrud">Admin Level: CRUD</div>
-        <div class="message_div" *ngIf="!this.adminService.isAdminCrud">Admin Level: CRU</div>
+        <div class="message_div" *ngIf="this.adminService.isCrudLoggedIn">Admin Level: CRUD</div>
+        <div class="message_div" *ngIf="!this.adminService.isCrudLoggedIn">Admin Level: CRU</div>
     </div>
 </div>
 <div class="add_listing_form_wrapper">

@@ -3,26 +3,20 @@
     <div class="admin_nav_div">
         <button class="nav_button" (click)="this.adminService.adminNavAddListing()">Add Listing</button>
         <button class="nav_button" (click)="this.adminService.adminNavUploadImage()">Upload Image</button>
-        <!-- <button class="nav_button" (click)="this.adminService.adminLogout()">Logout</button> -->
         <button class="nav_button" (click)="this.adminService.clientMenu()">Client Menu</button>
-        <!-- <button class="nav_button" (click)="this.adminService.adminHome()">Admin Home</button> -->
     </div>
     <div class="title_div">Listings Maintenance</div>
-    <!-- <div class="title_div" *ngIf="isAdminCrud">Listings Maintenance | Admin Level: CRUD</div>
-    <div class="title_div" *ngIf="!isAdminCrud">Listings Maintenance | Admin Level: CRU</div> -->
     <div class="admin_header_message_div">
-        <div class="message_div" *ngIf="this.adminService.isAdminCrud">Admin Level: CRUD</div>
-        <div class="message_div" *ngIf="!this.adminService.isAdminCrud">Admin Level: CRU</div>
+        <div class="message_div" *ngIf="this.adminService.isCrudLoggedIn">Admin Level: CRUD</div>
+        <div class="message_div" *ngIf="!this.adminService.isCrudLoggedIn">Admin Level: CRU</div>
         <button class="nav_button" (click)="this.adminService.adminHome()">Admin Home</button>
         <button class="nav_button" (click)="this.adminService.adminLogout()">Logout</button>
-        <!-- <div class="admin_message" *ngIf="this.adminlisting_form_message">{{adminlisting_form_message}}</div> -->
     </div>
 </div>
 <div class="rwd_header_wrapper">
     <div class="rwd_nav_wrapper_div">
         <img class="rwd_nav_icon" (click)="menuOpen($event)" width="20" src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMTYiIHdpZHRoPSIxNCIgdmlld0JveD0iMCAwIDQ0OCA1MTIiPjwhLS0hRm9udCBBd2Vzb21lIEZyZWUgNi41LjEgYnkgQGZvbnRhd2Vzb21lIC0gaHR0cHM6Ly9mb250YXdlc29tZS5jb20gTGljZW5zZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tL2xpY2Vuc2UvZnJlZSBDb3B5cmlnaHQgMjAyMyBGb250aWNvbnMsIEluYy4tLT48cGF0aCBvcGFjaXR5PSIxIiBmaWxsPSIjMUUzMDUwIiBkPSJNMCA5NkMwIDc4LjMgMTQuMyA2NCAzMiA2NEg0MTZjMTcuNyAwIDMyIDE0LjMgMzIgMzJzLTE0LjMgMzItMzIgMzJIMzJDMTQuMyAxMjggMCAxMTMuNyAwIDk2ek0wIDI1NmMwLTE3LjcgMTQuMy0zMiAzMi0zMkg0MTZjMTcuNyAwIDMyIDE0LjMgMzIgMzJzLTE0LjMgMzItMzIgMzJIMzJjLTE3LjcgMC0zMi0xNC4zLTMyLTMyek00NDggNDE2YzAgMTcuNy0xNC4zIDMyLTMyIDMySDMyYy0xNy43IDAtMzItMTQuMy0zMi0zMnMxNC4zLTMyIDMyLTMySDQxNmMxNy43IDAgMzIgMTQuMyAzMiAzMnoiLz48L3N2Zz4='/>
         <select class="rwd_nav_select" #nav size="5" (change)="onSelectOption(nav.value)" (blur)="onBlur()">
-        <!-- <select class="rwd_nav_select" size="5" (selectionchange)="onSelectionChange($event)"> -->
             <option class="rwd_option" value="upload_image">Upload Image</option>
             <option class="rwd_option" value="add_listing">Add Listing</option>
             <option class="rwd_option" value="client_menu">Client Menu</option>
@@ -31,22 +25,18 @@
         </select>
     </div>
     <div>
-        <div class="message_div" *ngIf="this.adminService.isAdminCrud">Admin Level: CRUD</div>
-        <div class="message_div" *ngIf="!this.adminService.isAdminCrud">Admin Level: CRU</div>
+        <div class="message_div" *ngIf="this.adminService.isCrudLoggedIn">Admin Level: CRUD</div>
+        <div class="message_div" *ngIf="!this.adminService.isCrudLoggedIn">Admin Level: CRU</div>
     </div>
 </div>
 <div class="listing_form_wrapper">
     <div class="admin_form_message_wrapper">
         <div class="admin_update_message" *ngIf="this.adminlisting_form_message">{{adminlisting_form_message}}</div>
-    </div>    
-    <!-- <app-listing-form [initialState]="$formListing" (formSubmitted)="adminUpdateListing($event)"></app-listing-form> -->
+    </div>
     <form class="listing-form" autocomplete="off" [formGroup]="listingForm" (ngSubmit)="submitUpdateForm(listingForm)">
         <input [hidden]="true" formControlName="id" [value]="id.value">
         <div class="form_control_wrapper_div">
-            <!-- <input class="form-control" type="text" id="image" formControlName="image" placeholder="Image" required> -->
-            <!-- <select formControlName="image_selector" id="image"> -->
             <select class="form_control_select_element" formControlName="image" id="image">
-              <!-- <option *ngFor="let image of images$ | async" [ngValue]="image.image_name"> -->
                 <option *ngFor="let image of images$ | async" [ngValue]="image.image">{{ image.name }} | {{ image.size }}</option>          
             </select>
             <label for="image">Image</label>
@@ -63,77 +53,90 @@
                 Title can be at most 50 characters long.
             </div>
         </div>
-      
-          <!-- short_description -->
-          <div class="form_control_wrapper_div">
+        <div class="form_control_wrapper_div">
             <input class="form_control_input_element" id="short_description" type="text" formControlName="short_description" placeholder="Short description" required>
             <label for="short_description">Details</label>
-          </div>
-        
+        </div>        
         <div *ngIf="short_description.invalid && (short_description.dirty || short_description.touched)" class="alert alert-danger">
-    
             <div *ngIf="short_description.errors?.['required']">
-            Short description is required.
+                Short description is required.
             </div>
             <div *ngIf="short_description.errors?.['maxlength']">
                 Short description can be at most 100 characters long.
             </div>
         </div>
-      
-      
-      
-          <!-- price -->
-          <div class="form_control_wrapper_div">
+        <div class="form_control_wrapper_div">
             <input class="form_control_input_element" id="price" type="text" formControlName="price" placeholder="Price" required>
             <label for="price">Price</label>
-          </div>
-        
-          <div *ngIf="price.invalid && (price.dirty ||price.touched)" class="alert alert-danger">  
+        </div>
+        <div *ngIf="price.invalid && (price.dirty ||price.touched)" class="alert alert-danger">  
             <div *ngIf="price.errors?.['required']">
                 Price is required.
             </div>        
-          </div>
-      
-      
-      
-      
-          <!-- active -->
-          <div class="form-floating mb-3">
-              <div class="form-check">
-                  <input class="form-check-input" type="radio" formControlName="active" name="active" id="active-true" value="true" required>
-                  <label class="form-check-label" for="active-true">Active listing.</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" formControlName="active" name="active" id="active-false" value="false">
-                  <label class="form-check-label" for="active-false">Inactive listing.</label>
-                </div>
-          </div>
-          <div class="admin_form_buttons_wrapper_div">
+        </div>
+        <div class="form-floating mb-3">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" formControlName="active" name="active" id="active-true" value="true" required>
+                <label class="form-check-label" for="active-true">Active listing.</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" formControlName="active" name="active" id="active-false" value="false">
+                <label class="form-check-label" for="active-false">Inactive listing.</label>
+            </div>
+        </div>
+        <div class="admin_form_buttons_wrapper_div">
             <button class="admin_form_button" type="submit" [disabled]="listingForm.invalid">Update</button>
             <button class="admin_form_button" (click)="cancelUpdate($event)">Cancel</button>
-          </div>          
+        </div>          
     </form>
 </div>
+<!-- <div class="listings_content">
+    <ul class="listings">
+        <li class="listing_container" *ngFor="let listing of listings$ | async">
+            <img class="listing_img" src="data:image/jpg;base64, {{listing.image}}">
+            <div class="listing_text_container">
+                <span class="listing_title">{{listing.title}}</span>
+                <span class="short_description">{{listing.short_description}}</span>
+            </div>
+            <div class="add_price_container">
+                <span class="add">
+                    <button class="add_button">Add</button>
+                </span>                    
+                <span class="price">{{ listing.price }}</span>
+            </div>
+            <div class="maintenance_controls_container">
+                <span class="maintenance_control_update">
+                    <button class="maintenance_button" (click)="updateListingForm(listing)">Update</button>
+                </span>
+                <span class="maintenance_control_delete">
+                    <button class="maintenance_button" [disabled]="!this.adminService.isAdminCrud" (click)="deleteFormListing(listing._id!)">Delete</button>
+                </span>
+                <div class="active_status_div">
+                        <div class="active_status_title">Active:</div>
+                        <div class="active_status_bool">{{listing.active}}</div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div> -->
 <div class="listings_content">
     <ul class="listings">
         <li class="listing_container" *ngFor="let listing of listings$ | async">
-            <!-- <div class="listing_container"> -->
-                <!-- <img class="listing_img" src={{listing.listing_id}}> -->
-                <!-- <img class="listing_img" src="assets/listings_images/large_catfish.jpg"> -->
-                <!-- <img class="listing_img" src="data:image/jpg;base64, {{listings_images[0].image_b64}}"> -->
-                <img class="listing_img" src="data:image/jpg;base64, {{listing.image}}">
-                <div class="listing_text_container">
-                    <span class="listing_title">{{listing.title}}</span>
-                    <!-- <span class="listing_title">Large Fried Catfish Plate</span> -->
-                    <span class="short_description">{{listing.short_description}}</span>
-                    <!-- <span class="short_description">5 Catfish fillets, fries and cole slaw.</span> -->
+            <div class="list_item_wrapper">
+                <div class="listing_image_wrapper">
+                    <img class="listing_img" src="data:image/jpg;base64, {{listing.image}}">
                 </div>
-                <div class="add_price_container">
-                    <span class="add">
+                <div class="add_price_container">                    
+                    <div class="price_wrapper">
+                        <div class="price">{{ listing.price }}</div>
+                    </div>
+                    <div class="add_button_wrapper">
                         <button class="add_button">Add</button>
-                    </span>
-                    <!-- <span class="price">{{listing.price}}</span> -->
-                    <span class="price">{{ listing.price }}</span>
+                    </div>
+                </div>
+                <div class="listing_text_container">
+                    <div class="listing_title">{{listing.title}}</div>
+                    <div class="short_description">{{listing.short_description}}</div>
                 </div>
                 <div class="maintenance_controls_container">
                     <span class="maintenance_control_update">
@@ -143,14 +146,42 @@
                         <button class="maintenance_button" [disabled]="!this.adminService.isAdminCrud" (click)="deleteFormListing(listing._id!)">Delete</button>
                     </span>
                     <div class="active_status_div">
-                        <!-- <div class="admin_message" *ngIf="listing.active"> -->
                             <div class="active_status_title">Active:</div>
                             <div class="active_status_bool">{{listing.active}}</div>
-
-                        <!-- </div> -->
+                    </div>
+                </div>                                
+            </div>
+            <div class="rwd_list_item_wrapper">
+                <div class="rwd_row_0">             
+                    <div class="listing_image_wrapper">
+                        <img class="listing_img" src="data:image/jpg;base64, {{listing.image}}">
+                    </div>                   
+                    <div class="listing_text_container">
+                        <div class="listing_title">{{listing.title}}</div>
+                        <div class="short_description">{{listing.short_description}}</div>
+                    </div>
+                </div>            
+                <div class="add_price_container">                
+                    <div class="price_wrapper">
+                        <div class="price">{{ listing.price }}</div>
+                    </div>
+                    <div class="add_button_wrapper">
+                        <button class="add_button">Add</button>
+                    </div>                
+                </div>
+                <div class="maintenance_controls_container">
+                    <div class="maintenance_control_update">
+                        <button class="maintenance_button" (click)="updateListingForm(listing)">Update</button>
+                    </div>
+                    <div class="maintenance_control_delete">
+                        <button class="maintenance_button" [disabled]="!this.adminService.isAdminCrud" (click)="deleteFormListing(listing._id!)">Delete</button>
+                    </div>
+                    <div class="active_status_div">
+                        <div class="active_status_title">Active:</div>
+                        <div class="active_status_bool">{{listing.active}}</div>
                     </div>
                 </div>
-            <!-- </div> -->
+            </div>                        
         </li>
     </ul>
 </div>

@@ -151,19 +151,13 @@ export class AdminService implements OnInit {
       if (authToken) {
         try {
           let jwt_payload = JSON.parse(atob(authToken.split('.')[1]));
-          /* return jwt_payload.role === 'crud' ? true : false; */
           resolve(jwt_payload.role === 'crud' ? true : false);
-          /* return crud_login; */
         } catch (e) {
-         /*  return false; */
          resolve(false);
-         /* return crud_login; */
         }
       }
       else {
-        //return false;
         resolve(false);
-        /* return crud_login; */
       }
     });
     return crud_login;    
@@ -205,7 +199,7 @@ export class AdminService implements OnInit {
     this.router.navigate(['menu']);
   }
   adminHome() {
-    this.isAdminCrud ? this.router.navigate(['admin/admins/admincrud']) : this.router.navigate(['admin/admins/adminru'])    
+    this.isCrudLoggedIn ? this.router.navigate(['admin/admins/admincrud']) : this.router.navigate(['admin/admins/adminru'])    
   }
 
   handleError(error: HttpErrorResponse) {
