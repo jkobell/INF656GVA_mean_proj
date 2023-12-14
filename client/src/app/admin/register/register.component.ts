@@ -1,17 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-/* import { CommonModule } from '@angular/common'; */
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { AdminService } from 'src/app/admin.service';
 
-/* @Component({
-  selector: 'app-register',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
-}) */
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -44,7 +35,6 @@ export class RegisterComponent implements OnInit {
     this.nav_select.style.cssText += 'display: none';
     this.nav_img.style.cssText += 'display: block';
   }
-
   
   logout() {
     this.adminService.logout()
@@ -53,15 +43,7 @@ export class RegisterComponent implements OnInit {
   cancel_register() {
     this.router.navigate(['admin/admins/admincrud']);
   }
-
-  /* registerUser() {
-    this.adminService.register(this.registerForm.value).subscribe((res) => {
-      if (res.result) {
-        this.registerForm.reset()
-        this.router.navigate(['login']);
-      }
-    })
-  } */
+  
   registerUser() {
     this.adminService.register(this.registerForm.value).subscribe({
       next: response_data => {

@@ -1,9 +1,3 @@
-/* .wrapper {
-    box-sizing: border-box;
-    min-height: 100%;    
-    display: flex;
-    flex-direction: column;
-} */
 .header_wrapper {
   /* box-sizing: border-box; */
   /* min-height: 100%; */    
@@ -68,27 +62,6 @@ header li {
     list-style: none;
     padding: 0px 0px;
 }
-/* 
-header a {
-    text-decoration: none;
-    color: #555;
-    transition: all 0.3s ease 0s;
-} 
-
- header a:hover {
-    color: #b2dfdb;
-} 
- */
-
-/* -----fonts----- */
-/* :host {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  font-size: 14px;
-  color: #333;
-  box-sizing: border-box;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-} */
 
 .footer_wrapper {
   display: flex;
@@ -109,13 +82,6 @@ header a {
   padding: 0;
   /* margin: 0; */  
 }
-
-/* .app_footer {
-  min-width: 100%;
-  background-color: #3884da;
-  color: white;
-  margin: 0;  
-} */
 
 footer ul {
   display: flex;

@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
   styleUrl: './admincrud.component.css'
 })
 export class AdmincrudComponent implements OnInit {
-  /* isAdminCrud: boolean = this.adminService.isCrudLoggedIn; */
   currentUser: Object = {};
   nav_wrapper_div!: HTMLElement;
   nav_select!: HTMLElement;
@@ -17,7 +16,6 @@ export class AdmincrudComponent implements OnInit {
   constructor(
     public adminService: AdminService,
     public router: Router
-    //private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() { 
@@ -27,34 +25,6 @@ export class AdmincrudComponent implements OnInit {
     this.nav_select.style.cssText += 'display: none';
     this.nav_img.style.cssText += 'display: block';
   }
-
-  /* logout() {
-    this.adminService.logout();
-  }
-
-  registerAdmin() {
-    this.router.navigate(['admin/register']);
-  }
-
-  image_upload() {
-    this.router.navigate(['admin/image-upload']);
-  }  
-
-  adminNavAddListing() {
-    this.router.navigate(['admin/add-listing']);    
-  }
-  adminNavUploadImage() {
-    this.router.navigate(['admin/image-upload']);
-  }
-  adminLogout() {
-    this.adminService.logout();
-  }
-  clientMenu() {
-    this.router.navigate(['menu']);
-  }
-  adminHome() {
-    this.isAdminCrud ? this.router.navigate(['admin/admins/admincrud']) : this.router.navigate(['admin/admins/adminru'])    
-  } */
 
   onSelectOption(selection: string): void {
     switch (selection) {

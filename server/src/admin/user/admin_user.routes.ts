@@ -1,5 +1,4 @@
 import * as express from "express";
-/* import * as mongodb from "mongodb"; */
 import * as bcryptjs from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 import config from "../../../src/configuration/config";
@@ -19,23 +18,7 @@ admin_userRouter.get("/", async (_req, res) => {
     } catch (error) {
         res.status(500).send(error.message);
     }
- });
-
- /* admin_userRouter.post("register/", async (req, res) => {
-    try {
-        const user = req.body;
-        const result = await user_collections.users.insertOne(user);
-  
-        if (result.acknowledged) {
-            res.status(201).send(`Registered a new admin user: ID ${result.insertedId}.`);
-        } else {
-            res.status(500).send("Failed to register a new admin user.");
-        }
-    } catch (error) {
-        console.error(error);
-        res.status(400).send(error.message);
-    }
- }); */
+ }); 
 
  admin_userRouter.post("/register", [checkUserExists, validateRegisterUser], async (req: any, res: any, next: any) => {
     const result_errors = validationResult(req).array();
@@ -54,7 +37,6 @@ admin_userRouter.get("/", async (_req, res) => {
         if (result.acknowledged) {
             res.status(201).send({ "status": 201});
         } else {
-            //res.status(500).send("Failed to register a new admin user.");
             res.status(500).send();
         }
     } catch (error) {
@@ -85,9 +67,8 @@ admin_userRouter.get("/", async (_req, res) => {
         const accessToken = jwt.sign(
             { _id: result_user._id, role: result_user.role },
             config.jwtSecret, { expiresIn: expiresIn }
-          );
-                
-       //res.send(token); //dev only... retain user role 
+        );                
+       
        res.status(200).send({ "user": result_user, "access_token": accessToken, "expires_in":  expiresIn});       
             
     } catch (error) {

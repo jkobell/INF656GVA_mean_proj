@@ -5,8 +5,6 @@ import { user_collections } from "../../../src/database";
 
 export { checkUserExists };
 
-
-/* const checkUserExists = async (req: Request, res: Response, next: express.NextFunction) => { */
 async function checkUserExists(req: any, res: any, next: any) {
     try {
         const name = req?.body?.name;

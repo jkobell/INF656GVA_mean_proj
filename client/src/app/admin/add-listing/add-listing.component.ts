@@ -11,9 +11,7 @@ import { AdminService } from 'src/app/admin.service';
 export class AddListingComponent implements OnInit{
   add_listing_message?: string;
 
-  /* nav_wrapper_div: HTMLElement = document.querySelector("div[class='rwd_nav_wrapper_div']") as HTMLElement;
-  nav_select: HTMLElement = this.nav_wrapper_div.querySelector("select[class='rwd_nav_select']") as HTMLElement;
-  nav_img: HTMLElement = this.nav_wrapper_div.querySelector("img[class='rwd_nav_icon']") as HTMLElement; */
+  
   nav_wrapper_div!: HTMLElement;
   nav_select!: HTMLElement;
   nav_img!: HTMLElement;

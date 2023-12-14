@@ -14,13 +14,7 @@ export class AdminruComponent implements OnInit {
 
   constructor(
     public adminService: AdminService,
-    //private activatedRoute: ActivatedRoute
-  ) {
-    /* let id = this.activatedRoute.snapshot.paramMap.get('id');
-    this.adminService.getUserProfile(id).subscribe(res => {
-      this.currentUser = res.msg;
-    }) */
-  }
+  ) { }
 
   ngOnInit() {
     this.nav_wrapper_div = document.querySelector("div[class='rwd_nav_wrapper_div']") as HTMLElement;

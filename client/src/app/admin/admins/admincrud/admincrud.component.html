@@ -1,11 +1,6 @@
 <div class="top_placeholder"></div>
-<!-- <app-register></app-register> -->
-<!-- <h1>admincrud works!</h1> -->
 <div class="listing_maintenance_header_container">
-    <div class="admin_nav_div">        
-        <!-- <button class="nav_button" (click)="clientMenu()">Client Menu</button>
-        <button class="nav_button" (click)="adminNavAddListing()">Add Listing</button>
-        <button class="nav_button" (click)="adminNavUploadImage()">Upload Image</button> -->
+    <div class="admin_nav_div"> 
         <button class="nav_button" (click)="this.adminService.adminNavAddListing()">Add Listing</button>
         <button class="nav_button" (click)="this.adminService.adminNavUploadImage()">Upload Image</button>
         <button class="nav_button" (click)="this.adminService.adminNavUpdateListing()">Update Listing</button>
@@ -13,27 +8,16 @@
     <div class="title_div">Administrator Home</div>
     <div class="admin_message_div">
         <div class="message_div" *ngIf="this.adminService.isCrudLoggedIn">Admin Level: CRUD</div>
-        <div class="message_div" *ngIf="!this.adminService.isCrudLoggedIn">Admin Level: CRU</div>
-        <!-- <div class="message_div" *ngIf="this.adminService.isAdminCrud">Admin Level: CRUD</div> -->
-        <!-- <div class="message_div" *ngIf="this.adminService.isCrudLoggedIn">Admin Level: {{ this.adminService.isCrudLoggedIn ? 'CRUD':'CRU'}}</div>
-        <div class="message_div" *ngIf="!this.adminService.isAdminCrud">Admin Level: {{ this.adminService.isAdminCrud ? 'CRUD':'CRU'}}</div> -->
-        
-        <!-- <div class="message_div" *ngIf="this.adminService.isAdminCrud">Admin Level: CRUD</div> -->
-        <!-- <div class="message_div" *ngIf="this.adminService.isCrudLoggedIn | async">Admin Level: CRUD</div> -->
-        
-        <!-- <div class="message_div" *ngIf="!this.adminService.isAdminCrud | async">Admin Level: CRUD</div> -->
-        <!-- <div class="message_div" *ngIf="!this.adminService.isAdminCrud">Admin Level: CRU</div> -->
+        <div class="message_div" *ngIf="!this.adminService.isCrudLoggedIn">Admin Level: CRU</div>        
         <button class="crud_admin_button" (click)="this.adminService.registerAdmin()" *ngIf="this.adminService.isCrudLoggedIn">Register New Admin</button>
         <button class="crud_admin_button" (click)="this.adminService.clientMenu()">Client Menu</button>
-        <button class="crud_admin_button" (click)="this.adminService.adminLogout()">Logout</button>        
-        <!-- <button class="crud_admin_button" (click)="adminLogout()">Logout</button> -->
+        <button class="crud_admin_button" (click)="this.adminService.adminLogout()">Logout</button>
     </div>
 </div>
 <div class="rwd_header_wrapper">
     <div class="rwd_nav_wrapper_div">
         <img class="rwd_nav_icon" (click)="menuOpen($event)" width="20" src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMTYiIHdpZHRoPSIxNCIgdmlld0JveD0iMCAwIDQ0OCA1MTIiPjwhLS0hRm9udCBBd2Vzb21lIEZyZWUgNi41LjEgYnkgQGZvbnRhd2Vzb21lIC0gaHR0cHM6Ly9mb250YXdlc29tZS5jb20gTGljZW5zZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tL2xpY2Vuc2UvZnJlZSBDb3B5cmlnaHQgMjAyMyBGb250aWNvbnMsIEluYy4tLT48cGF0aCBvcGFjaXR5PSIxIiBmaWxsPSIjMUUzMDUwIiBkPSJNMCA5NkMwIDc4LjMgMTQuMyA2NCAzMiA2NEg0MTZjMTcuNyAwIDMyIDE0LjMgMzIgMzJzLTE0LjMgMzItMzIgMzJIMzJDMTQuMyAxMjggMCAxMTMuNyAwIDk2ek0wIDI1NmMwLTE3LjcgMTQuMy0zMiAzMi0zMkg0MTZjMTcuNyAwIDMyIDE0LjMgMzIgMzJzLTE0LjMgMzItMzIgMzJIMzJjLTE3LjcgMC0zMi0xNC4zLTMyLTMyek00NDggNDE2YzAgMTcuNy0xNC4zIDMyLTMyIDMySDMyYy0xNy43IDAtMzItMTQuMy0zMi0zMnMxNC4zLTMyIDMyLTMySDQxNmMxNy43IDAgMzIgMTQuMyAzMiAzMnoiLz48L3N2Zz4='/>
         <select class="rwd_nav_select" #nav size="8" (change)="onSelectOption(nav.value)" (blur)="onBlur()">
-        <!-- <select class="rwd_nav_select" size="5" (selectionchange)="onSelectionChange($event)"> -->
             <option class="rwd_option" value="upload_image">Upload Image</option>
             <option class="rwd_option" value="update_listing">Update Listing</option>
             <option class="rwd_option" value="add_listing">Add Listing</option>
@@ -45,21 +29,8 @@
     <div>
         <div class="message_div" *ngIf="this.adminService.isCrudLoggedIn">Admin Level: CRUD</div>
         <div class="message_div" *ngIf="!this.adminService.isCrudLoggedIn">Admin Level: CRU</div>
-        <!-- <div class="message_div" *ngIf="this.adminService.isAdminCrud">Level: {{ this.adminService.isAdminCrud ? 'CRUD':'CRU'}}</div> -->
-        
-        <!-- <div class="message_div" *ngIf="this.adminService.isAdminCrud | async">Admin Level: CRUD</div> -->
-        <!-- <div class="message_div" *ngIf="this.adminService.isAdminCrud">Admin Level: {{ this.adminService.isAdminCrud ? 'CRUD':'CRU'}}</div> -->
     </div>
 </div>
 <div class="content_wrapper"></div>
-<!-- <div>
-    <button (click)="register()" *ngIf="this.adminService.isLoggedIn" type="button" class="btn btn-primary">Register New Admin</button>
-</div>
-<div>
-    <button (click)="image_upload()" *ngIf="this.adminService.isLoggedIn" type="button" class="btn btn-primary">Upload Images</button>
-</div>
-<div>
-    <button (click)="logout()" *ngIf="this.adminService.isLoggedIn" type="button" class="btn btn-primary">Logout</button>
-</div> -->
-<!-- <app-listing-form (formSubmitted)="addListing($event)"></app-listing-form> -->
+
 

@@ -11,7 +11,6 @@ import { ListingImage } from 'src/app/listings/listings_image';
 })
 export class ImageUploadComponent implements OnInit {
   image_upload_message?: string;
-  //uploadImageForm: FormGroup;
   filename?: string;
   public uploadImage = {} as ListingImage;
 
@@ -20,7 +19,6 @@ export class ImageUploadComponent implements OnInit {
   nav_img!: HTMLElement;
 
   constructor(
-    //public formBuilder: FormBuilder,
     public adminService: AdminService,
     public router: Router
   ) { }
@@ -43,7 +41,6 @@ export class ImageUploadComponent implements OnInit {
     if (file) {
       this.filename = file.name;
       this.uploadImage.name = file.name;
-      //this.uploadImage.description = file.type;
       this.uploadImage.size = file.size.toFixed();
       
       const b64string = await this.convertToBase64(file);
@@ -65,13 +62,10 @@ export class ImageUploadComponent implements OnInit {
     let reader = new FileReader();
     let result_promise = new Promise<string>((resolve) => {
       reader.readAsDataURL(file);    
-      reader.onload = (event: any) => {
-        //console.log('nottostring: ',event.target.result);
-        /* this.uploadImage.image = event.target.result;  */ 
+      reader.onload = (event: any) => { 
         resolve(event.target.result);     
       }; 
       reader.onerror = (error) => {
-        //console.log('File read error: ', error);
         this.image_upload_message = `File read error: ${error}`;
       };
     })
@@ -82,8 +76,6 @@ export class ImageUploadComponent implements OnInit {
     this.adminService.createImage(this.uploadImage).subscribe({
       next: response_data => {
         if (response_data.status === 201) {
-          //this.registerForm.reset()
-          //this.router.navigate(['admin/login']);
           this.image_upload_message = response_data.success_message;
         }
         if (response_data.status === 400) {

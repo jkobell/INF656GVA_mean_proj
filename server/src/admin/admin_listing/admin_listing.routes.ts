@@ -1,25 +1,20 @@
 import * as express from "express";
 import * as mongodb from "mongodb";
 import { listing_collections } from "../../../src/database";
-import { InsertOneListing, UpdateOneListing, InsertOneListingImage } from "../../../src/utility";
 
 export const admin_listingRouter = express.Router();
 admin_listingRouter.use(express.json());
 
 admin_listingRouter.get("/", async (_req, res) => {
-    try {
-        //InsertOneListing();
-        //UpdateOneListing();
-        //InsertOneListingImage();
+    try {        
         const listings = await listing_collections.listings.find({}).toArray();
         res.status(200).send(listings);
-        //res.status(200).send('HELLO ADMIN listings');
     } catch (error) {
         res.status(500).send(error.message);
     }
  });
 
- admin_listingRouter.get("/:id", async (req, res) => { //url example, query by objectId; http://localhost:4242/admin/listings/654f792269d021d8e9209172
+ admin_listingRouter.get("/:id", async (req, res) => {
     try {
         const id = req?.params?.id;
         const query = { _id: new mongodb.ObjectId(id) };
@@ -51,13 +46,10 @@ admin_listingRouter.get("/", async (_req, res) => {
         res.status(400).send({ "status": 400, "error_message":error.message});
     }
  });
-
- /* admin_listingRouter.put("/:id", async (req, res) => { */
+ 
  admin_listingRouter.put("/", async (req, res) => {
     try {
-        //const id = req?.params?.id;
         const listing = req.body;
-        /* const query = { _id: new mongodb.ObjectId(id) }; */
         const query = { _id: new mongodb.ObjectId(listing.id) };
         const result = await listing_collections.listings.updateOne(query, { $set: listing });
   

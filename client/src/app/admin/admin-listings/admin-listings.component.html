@@ -90,35 +90,6 @@
         </div>          
     </form>
 </div>
-<!-- <div class="listings_content">
-    <ul class="listings">
-        <li class="listing_container" *ngFor="let listing of listings$ | async">
-            <img class="listing_img" src="data:image/jpg;base64, {{listing.image}}">
-            <div class="listing_text_container">
-                <span class="listing_title">{{listing.title}}</span>
-                <span class="short_description">{{listing.short_description}}</span>
-            </div>
-            <div class="add_price_container">
-                <span class="add">
-                    <button class="add_button">Add</button>
-                </span>                    
-                <span class="price">{{ listing.price }}</span>
-            </div>
-            <div class="maintenance_controls_container">
-                <span class="maintenance_control_update">
-                    <button class="maintenance_button" (click)="updateListingForm(listing)">Update</button>
-                </span>
-                <span class="maintenance_control_delete">
-                    <button class="maintenance_button" [disabled]="!this.adminService.isAdminCrud" (click)="deleteFormListing(listing._id!)">Delete</button>
-                </span>
-                <div class="active_status_div">
-                        <div class="active_status_title">Active:</div>
-                        <div class="active_status_bool">{{listing.active}}</div>
-                </div>
-            </div>
-        </li>
-    </ul>
-</div> -->
 <div class="listings_content">
     <ul class="listings">
         <li class="listing_container" *ngFor="let listing of listings$ | async">
@@ -143,7 +114,7 @@
                         <button class="maintenance_button" (click)="updateListingForm(listing)">Update</button>
                     </span>
                     <span class="maintenance_control_delete">
-                        <button class="maintenance_button" [disabled]="!this.adminService.isAdminCrud" (click)="deleteFormListing(listing._id!)">Delete</button>
+                        <button class="maintenance_button" [disabled]="!this.adminService.isCrudLoggedIn" (click)="deleteFormListing(listing._id!)">Delete</button>
                     </span>
                     <div class="active_status_div">
                             <div class="active_status_title">Active:</div>
@@ -174,7 +145,7 @@
                         <button class="maintenance_button" (click)="updateListingForm(listing)">Update</button>
                     </div>
                     <div class="maintenance_control_delete">
-                        <button class="maintenance_button" [disabled]="!this.adminService.isAdminCrud" (click)="deleteFormListing(listing._id!)">Delete</button>
+                        <button class="maintenance_button" [disabled]="!this.adminService.isCrudLoggedIn" (click)="deleteFormListing(listing._id!)">Delete</button>
                     </div>
                     <div class="active_status_div">
                         <div class="active_status_title">Active:</div>

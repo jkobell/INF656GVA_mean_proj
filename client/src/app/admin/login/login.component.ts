@@ -3,8 +3,6 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { AdminService } from 'src/app/admin.service';
 
-import { Observable, throwError } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -37,26 +35,15 @@ export class LoginComponent implements OnInit {
     this.nav_img  = this.nav_wrapper_div.querySelector("img[class='rwd_nav_icon']") as HTMLElement;
     this.nav_select.style.cssText += 'display: none';
     this.nav_img.style.cssText += 'display: block';
-   }
-
-  /* loginUser() {    
-    this.adminService.login(this.loginForm.value)
-    .subscribe((error: any, res: any) => {
-      localStorage.setItem('access_token', res.access_token);
-      //this.currentUser = res;
-      if (res.user.role) {
-        this.router.navigate(['admin/admins/admin'+ res.user.role]);
-      }               
-      this.login_error_message = error;
-    });
-  } */
+  }
+  
   loginUser() {    
     this.adminService.login(this.loginForm.value)
     .subscribe(
       {
         next: (data) => {
           localStorage.setItem('access_token', data.access_token);
-          this.adminService.initIsCrudLoggedIn();
+          this.adminService.isCrudLoggedIn;
           if (data.user.role) {
             this.router.navigate(['admin/admins/admin'+ data.user.role]);
           }
@@ -70,21 +57,9 @@ export class LoginComponent implements OnInit {
 
   onSelectOption(selection: string): void {
     switch (selection) {
-      /* case 'upload_image':
-        this.adminService.adminNavUploadImage();
-        break;
-      case 'update_listing':
-        this.adminService.adminNavUpdateListing();
-        break; */
       case 'client_menu':
         this.adminService.clientMenu();
         break;
-      /* case 'admin_home':
-        this.adminService.adminHome();
-        break;
-      case 'logout':
-        this.adminService.adminLogout();
-        break; */
     }
   }
 

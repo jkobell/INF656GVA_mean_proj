@@ -7,28 +7,18 @@ import { Observable, of } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { ListingService } from '../../listing.service';
 import { AdminService } from 'src/app/admin.service';
-//import { UpdateListingComponent } from '../update-listing/update-listing.component';
-//import { ListingFormComponent } from '../listing-form/listing-form.component';
 
 @Component({
   selector: 'app-admin-listings',
   templateUrl: './admin-listings.component.html',
   styleUrl: './admin-listings.component.css'
-  //providers: [ListingFormComponent]
 })
 export class AdminListingsComponent implements OnInit {
-  /* isAdminCrud: boolean = this.adminService.isCrudLoggedIn; */
   listing_id!: string;
   adminlisting_form_message?: string;
   $formListing: BehaviorSubject<Listing> = new BehaviorSubject({});
   selectedListing?: Listing;
-  //update_listing_message?: string;
-  /* listings = LISTINGS;
-  selectedListing?: Listing;    
-  listings_images = LISTINGS_IMAGES; */
   listings$: Observable<Listing[]> = new Observable();
-  //listingFormComponent: ListingFormComponent;
-  //updateListing!: UpdateListingComponent
   images$: Observable<ListingImage[]> = new Observable();
   nav_wrapper_div!: HTMLElement;
   nav_select!: HTMLElement;
@@ -50,10 +40,7 @@ export class AdminListingsComponent implements OnInit {
     private fb: FormBuilder,
     private listingService: ListingService,
     public adminService: AdminService,
-    public router: Router
-    
-    //private updateListing: UpdateListingComponent
-    //private listingFormComponent: ListingFormComponent
+    public router: Router    
   ) { }
 
   get id() { return this.listingForm.get('id')!; } 
@@ -88,41 +75,25 @@ export class AdminListingsComponent implements OnInit {
   submitUpdateForm(form: FormGroup<any>) {
     const update_form = form;
     const form_values = form.value;
-    //this.formSubmitted.emit(this.listingForm.value);
     this.adminUpdateListing(form.value);
   }
 
   private fetchListings(): void {
-    //this.listings$ = this.adminService.getListings();
     this.listings$ = this.adminService.getListings();
   }
 
   private fetchImages(): void {
     this.adminService.getImages().subscribe({
       next: data => {
-        //let image_response = new Observable<ListingImage[]>();
-        //image_response = data;
-
         this.images$ = of(data);
-        
-        
-        
-        //this.images$ = data;
-        
-        //this.listingForm.controls['image_selector'].setValue(this.images$);
        },
       error: (error) => {
         this.adminlisting_form_message = error;
       }      
     });
-  }
-
-  /* isAdminCrud(): boolean {
-    return this.adminService.isCrudLoggedIn ? true : false;    
-  } */
+  }  
 
   updateListingForm(selectedListing: Listing) {
-    /* this.updateListing.hydrateForm(selectedListing); */
     this.hydrateForm(selectedListing);
     this.adminlisting_form_message = '';
   }
@@ -136,7 +107,6 @@ export class AdminListingsComponent implements OnInit {
 
   hydrateForm(updateListing: Listing) {
     this.listingForm.setValue(
-    //this.listingFormComponent.listingForm.patchValue(
       {
         id: updateListing._id,
         image: updateListing.image, 
@@ -152,8 +122,6 @@ export class AdminListingsComponent implements OnInit {
       .subscribe({
         next:  response_data => {
           if (response_data.status === 200) {
-            //this.registerForm.reset()
-            //this.router.navigate(['admin/login']);
             this.adminlisting_form_message = response_data.success_message;
           }
           else if (response_data.status === 400) {
@@ -175,8 +143,6 @@ export class AdminListingsComponent implements OnInit {
     this.adminService.deleteListing(id).subscribe({
       next:  response_data => {
         if (response_data.status === 200) {
-          //this.registerForm.reset()
-          //this.router.navigate(['admin/login']);
           this.adminlisting_form_message = response_data.success_message;
         }
         else if (response_data.status === 400) {
@@ -238,7 +204,7 @@ export class AdminListingsComponent implements OnInit {
     this.router.navigate(['menu']);
   }
   adminHome() {
-    this.adminService.isAdminCrud ? this.router.navigate(['admin/admins/admincrud']) : this.router.navigate(['admin/admins/adminru'])    
+    this.adminService.isCrudLoggedIn ? this.router.navigate(['admin/admins/admincrud']) : this.router.navigate(['admin/admins/adminru'])    
   }
 
   cancelUpdate(e: Event) {

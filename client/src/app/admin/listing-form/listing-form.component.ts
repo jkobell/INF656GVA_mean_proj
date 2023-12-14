@@ -18,10 +18,6 @@ export class ListingFormComponent implements OnInit {
   selectedImage?: ListingImage;
 
   images$: Observable<ListingImage[]> = new Observable();
-  
-  //images$?: ListingImage[];
-
-  //images$: Observable<ListingsImage[]> = of([{image_id: 111, image_name:'testimagename', image_b64:'jgggjgkjghjgjgjkjhkhkj' }]);
 
   @Input()
   initialState: BehaviorSubject<Listing> = new BehaviorSubject({});
@@ -35,8 +31,7 @@ export class ListingFormComponent implements OnInit {
   listingForm: FormGroup = new FormGroup({});
   
   constructor(private fb: FormBuilder, private adminService: AdminService) { }
-
-  /* get image_selector() { return this.listingForm.get('image_selector')!; } */
+  
   get image() { return this.listingForm.get('image')!; } 
   get title() { return this.listingForm.get('title')!; }
   get short_description() { return this.listingForm.get('short_description')!; }

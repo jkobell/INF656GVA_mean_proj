@@ -5,8 +5,6 @@
     </div>
     <div class="title_div">Login Administrator</div>
     <div class="admin_message_div">
-        <!-- <div class="message_div" *ngIf="this.adminService.isAdminCrud">Admin Level: {{ this.adminService.isAdminCrud ? 'CRUD':'CRU'}}</div>
-        <button class="nav_button" (click)="this.adminService.adminLogout()">Logout</button> -->
     </div>
 </div>
 <div class="rwd_header_wrapper">
@@ -14,22 +12,14 @@
         <img class="rwd_nav_icon" (click)="menuOpen($event)" width="20" src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMTYiIHdpZHRoPSIxNCIgdmlld0JveD0iMCAwIDQ0OCA1MTIiPjwhLS0hRm9udCBBd2Vzb21lIEZyZWUgNi41LjEgYnkgQGZvbnRhd2Vzb21lIC0gaHR0cHM6Ly9mb250YXdlc29tZS5jb20gTGljZW5zZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tL2xpY2Vuc2UvZnJlZSBDb3B5cmlnaHQgMjAyMyBGb250aWNvbnMsIEluYy4tLT48cGF0aCBvcGFjaXR5PSIxIiBmaWxsPSIjMUUzMDUwIiBkPSJNMCA5NkMwIDc4LjMgMTQuMyA2NCAzMiA2NEg0MTZjMTcuNyAwIDMyIDE0LjMgMzIgMzJzLTE0LjMgMzItMzIgMzJIMzJDMTQuMyAxMjggMCAxMTMuNyAwIDk2ek0wIDI1NmMwLTE3LjcgMTQuMy0zMiAzMi0zMkg0MTZjMTcuNyAwIDMyIDE0LjMgMzIgMzJzLTE0LjMgMzItMzIgMzJIMzJjLTE3LjcgMC0zMi0xNC4zLTMyLTMyek00NDggNDE2YzAgMTcuNy0xNC4zIDMyLTMyIDMySDMyYy0xNy43IDAtMzItMTQuMy0zMi0zMnMxNC4zLTMyIDMyLTMySDQxNmMxNy43IDAgMzIgMTQuMyAzMiAzMnoiLz48L3N2Zz4='/>
         <select class="rwd_nav_select" #nav size="2" (change)="onSelectOption(nav.value)" (blur)="onBlur()">            
             <option class="rwd_option" value="client_menu">Client Menu</option>
-            <!-- <option class="rwd_option" value="logout">Logout</option> -->
         </select>
-    </div>
-    <!-- <div>
-        <div class="message_div" *ngIf="this.adminService.isAdminCrud">Level: {{ this.adminService.isAdminCrud ? 'CRUD':'CRU'}}</div>
-    </div> -->
+    </div>    
 </div>
 <div class="form_wrapper">
     <div class="form_message_wrapper">
         <div class="message" *ngIf="this.login_error_message">{{login_error_message}}</div>
     </div>
-    <form class="form-register" [formGroup]="loginForm" (ngSubmit)="loginUser()">        
-        <!-- <div class="form_control_wrapper_div">            
-            <input type="text" class="form_control_input_element" formControlName="name" placeholder="Enter name" required>
-            <label>Name</label>
-        </div> -->
+    <form class="form-register" [formGroup]="loginForm" (ngSubmit)="loginUser()"> 
         <div class="form_control_wrapper_div">
             <input type="email" class="form_control_input_element" formControlName="email" placeholder="Enter email" required>        
             <label>Email</label>
@@ -40,28 +30,8 @@
         </div>
         <div class="admin_form_buttons_wrapper_div">
             <button type="submit"  class="admin_form_button">Login</button>
-           <!--  <button (click)="cancel_register()" type="button"  class="admin_form_button">Cancel</button> -->
         </div>        
     </form>
 </div>
 <div class="content_wrapper"></div>
-
-
-<!-- <div>
-    <h2 class="message" *ngIf="this.login_error_message">{{login_error_message}}</h2>
-</div>
-<div>
-    <form class="form-login" [formGroup]="loginForm" (ngSubmit)="loginUser()">
-        <h3 class="h3 mb-3 font-weight-normal text-center">Login</h3>
-        <div class="form-group">
-            <label>Email</label>
-            <input type="email" class="form-control" formControlName="email" placeholder="Enter email" required>
-        </div>
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password" class="form-control" formControlName="password" placeholder="Password">
-        </div>
-        <button type="submit" class="btn btn-block btn-primary">Login!</button>
-    </form>
-</div> -->
 
